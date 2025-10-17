@@ -1,0 +1,121 @@
+.hourly-forecast{
+  padding: 1.5rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: calc(var(--radius) * 1.5);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+.forecast-title{
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  color: var(--foreground);
+  padding: 0 1rem 0 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hourly-items{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 1rem 1rem 1rem;
+  margin-bottom: 0;
+  
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hourly-items::-webkit-scrollbar {
+    display: none;
+}
+
+.hourly-item{
+  min-width: 150px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  border-radius: var(--radius);
+  
+  background: hsla(0, 0%, 100%, 0.7); 
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  gap: .5rem;
+  scroll-snap-align: start;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+.hourly-time{
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+}
+
+.hourly-item > span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: -0.25rem;
+}
+
+.hourly-temp{
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.hourly-item img{
+  width: 50px;
+  height: 50px;
+}
+
+.hourly-item:hover{
+  transform: scale(1.05); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (max-width: 768px) {
+  .hourly-forecast {
+    padding: 1.5rem;
+    border-radius: var(--radius);
+  }
+
+  .forecast-title {
+    font-size: 1.5rem;
+    padding: 0 0.25rem;
+  }
+  
+  .hourly-items {
+    padding: 0 0.5rem 0.75rem 0.5rem;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hourly-item {
+    min-width: 110px;
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .hourly-item {
+      min-width: 100px;
+  }
+}
