@@ -1,6 +1,13 @@
+import { useState } from "react";
 import "../Styles/CurrentWeather.css";
 
-const CurrentWeather = ({ currentWeather }) => {
+const CurrentWeather = ({ currentWeather, setCity }) => {
+    const [location, setLocation] = useState('');
+
+    function clearInput() {
+        setCity(location)
+        setLocation('')
+    }
     return (
         <div >
             <div className="weather-header">
@@ -9,8 +16,10 @@ const CurrentWeather = ({ currentWeather }) => {
                     <input
                         className="weather-input"
                         placeholder="search desired city..."
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
                     ></input>
-                    <button className="search-button">Current Location</button>
+                    <button className="search-button" onClick={clearInput}>Current Location</button>
                 </div>
             </div>
 

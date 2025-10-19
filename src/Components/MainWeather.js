@@ -11,20 +11,57 @@ const MainWeather = () => {
     const apiKey = '44bf8207618c6b90a9471ad31fc07862';
 
     const [coords, setCoords] = useState({ lat: null, lon: null });
+    const [location, setLocation] = useState('');
     const [currentWeather, setCurrentWeather] = useState(null);
     const [hourWeather, setHourWeather] = useState(null);
     const [forecastWeather, setForecastWeather] = useState(null);
 
+    function setlocation(location) {
+        setLocation(location)
+        // console.log('location from child: ', location)
+    }
+
+
+
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                setCoords({
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude,
-                });
-            });
+        async function findCoords() {
+            if (location) {
+                try {
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.length > 0) {
+                        const lat = parseFloat(data[0].lat);
+                        const lon = parseFloat(data[0].lon);
+                        // console.log('Coordinates from city:', lat, lon);
+                        setCoords({ lat, lon });
+                    } else {
+                        console.warn('City not found.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching coordinates from city:', error);
+                }
+            } else {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        position => {
+                            const { latitude, longitude } = position.coords;
+                            // console.log('Coordinates from geolocation:', latitude, longitude);
+                            setCoords({ lat: latitude, lon: longitude });
+                        },
+                        error => {
+                            console.error('Geolocation error:', error);
+                        }
+                    );
+                } else {
+                    console.warn('Geolocation not supported by browser.');
+                }
+            }
         }
-    }, []);
+        findCoords();
+    }, [location]); 
+
 
     useEffect(() => {
         if (coords.lat && coords.lon) {
@@ -90,7 +127,7 @@ const MainWeather = () => {
                         return weatherCodes[code] || '01d';
                     };
 
-                    function weathercode_to_description(code){
+                    function weathercode_to_description(code) {
                         const weather_descriptions = {
                             0: "Clear sky",
                             1: "Mainly clear",
@@ -137,7 +174,7 @@ const MainWeather = () => {
                                 time: time.split('T')[1],
                                 temperature: data.hourly.temperature_2m[index],
                                 iconUrl: `https://openweathermap.org/img/wn/${iconCode}@2x.png`,
-                                description : description,
+                                description: description,
                             });
                         }
                     });
@@ -171,7 +208,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} />
+            <CurrentWeather currentWeather={currentWeather} setCity={setlocation} />
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>
