@@ -15,35 +15,56 @@ const MainWeather = () => {
     const [currentWeather, setCurrentWeather] = useState(null);
     const [hourWeather, setHourWeather] = useState(null);
     const [forecastWeather, setForecastWeather] = useState(null);
-    
-    function setlocation(location) {
-        setLocation(location)
-        // console.log('location from child: ', location)
+    const [city, setCity] = useState("");
+    const [suggestionlist, setSuggestionList] = useState([]);
+
+
+    const childProps = {
+
     }
 
+    useEffect(() => {
+        async function getSuggestions() {
+            if (city) {
+                try {
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    setSuggestionList(data);
+                } catch (error) {
+                    console.error(
+                        "Error fetching coordinates from city:",
+                        error,
+                    );
+                }
+            } else {
+                setSuggestionList([]); // Clear list if city is empty
+            }
+        }
+        getSuggestions();
+    }, [city]);
 
 
     useEffect(() => {
         async function findCoords() {
             if (location) {
-                try {
-                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
-                    const response = await fetch(url);
-                    const data = await response.json();
+                async function getCoords () {
+                    try {
+                        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
+                        const response = await fetch(url);
+                        const data = await response.json();
 
-                    if (data.length > 0) {
-                        const lat = parseFloat(data[0].lat);
-                        const lon = parseFloat(data[0].lon);
-                        // console.log('Coordinates from city:', lat, lon);
-                        setCoords({ lat, lon });
-                        // setSuggestion([]);
-                        // console.log(suggestion)
-                    } else {
-                        console.warn('City not found.');
+                        if (data.length > 0) {
+                            const lat = parseFloat(data[0].lat);
+                            const lon = parseFloat(data[0].lon);
+                            setCoords({ lat, lon });
+                        } else {
+                            console.warn('City not found.');
+                        }
+                    } catch (error) {
+                        console.error("Error fetching coordinates from city:", error);
                     }
-                } catch (error) {
-                    console.error('Error fetching coordinates from city:', error);
-                }
+                };
             } else {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
@@ -62,7 +83,7 @@ const MainWeather = () => {
             }
         }
         findCoords();
-    }, [location]); 
+    }, [location]);
 
 
     useEffect(() => {
@@ -210,7 +231,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} setCity={setlocation} loc={location}/>
+            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} coords={getCoords}/>
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>

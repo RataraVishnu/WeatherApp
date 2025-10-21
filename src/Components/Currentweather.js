@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import "../Styles/CurrentWeather.css";
 
-const CurrentWeather = ({ currentWeather, setCity }) => {
-    const [location, setLocation] = useState('');
+const CurrentWeather = ({ currentWeather, city, setCity, list, setCroods }) => {
+    console.log(city)
 
-    function clearInput() {
-        setCity(location)
-        setLocation('')
-    }
+    const showSuggestions = city.length > 0 && list.length > 0;
 
     return (
         <div >
@@ -17,10 +14,17 @@ const CurrentWeather = ({ currentWeather, setCity }) => {
                     <input
                         className="weather-input"
                         placeholder="search desired city..."
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
                     ></input>
-                    <button className="search-button" onClick={clearInput}>Current Location</button>
+                    <div className="suggestions-list" style={{visibility: showSuggestions? 'visible':'hidden'}}>
+                        {list.map((item, index) => (
+                            <p key={index} className="suggestion-item">
+                                {item.display_name}
+                            </p>
+                        ))};
+                    </div>
+                    <button className="search-button" onClick={setCroods}>Current Location</button>
                 </div>
             </div>
 
@@ -43,7 +47,7 @@ const CurrentWeather = ({ currentWeather, setCity }) => {
                     </div>
                     <div className="current-details-grid">
                         <div className="current-humidity">
-                            <img alt="humidity" src='./humidity.png' />
+                            <img alt="humidity" src="#" />
                             <div className="text-container">
                                 <label>Humidity</label>
                                 <span>{currentWeather?.main?.humidity} %</span>

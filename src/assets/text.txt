@@ -1,0 +1,12 @@
+<div >
+                        {list.length > 0 && (
+                            <div className="suggestions-list">
+                                {list.map((item, index) => (
+                                    <div key={index} className="suggestion-item">
+                                        {item.display_name}{" "}
+                                        {/* Adjust this depending on the response structure */}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
