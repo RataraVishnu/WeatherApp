@@ -48,7 +48,7 @@ const MainWeather = () => {
     useEffect(() => {
         async function findCoords() {
             if (location) {
-                async function getCoords () {
+                
                     try {
                         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
                         const response = await fetch(url);
@@ -64,7 +64,6 @@ const MainWeather = () => {
                     } catch (error) {
                         console.error("Error fetching coordinates from city:", error);
                     }
-                };
             } else {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
@@ -231,7 +230,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} coords={getCoords}/>
+            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist}/>
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>
