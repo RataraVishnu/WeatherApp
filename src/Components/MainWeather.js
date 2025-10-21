@@ -15,7 +15,7 @@ const MainWeather = () => {
     const [currentWeather, setCurrentWeather] = useState(null);
     const [hourWeather, setHourWeather] = useState(null);
     const [forecastWeather, setForecastWeather] = useState(null);
-
+    
     function setlocation(location) {
         setLocation(location)
         // console.log('location from child: ', location)
@@ -36,6 +36,8 @@ const MainWeather = () => {
                         const lon = parseFloat(data[0].lon);
                         // console.log('Coordinates from city:', lat, lon);
                         setCoords({ lat, lon });
+                        // setSuggestion([]);
+                        // console.log(suggestion)
                     } else {
                         console.warn('City not found.');
                     }
@@ -208,7 +210,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} setCity={setlocation} />
+            <CurrentWeather currentWeather={currentWeather} setCity={setlocation} loc={location}/>
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>

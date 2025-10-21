@@ -1,9 +1,12 @@
+import { StrictMode } from 'react';
 import MainWeather from './Components/MainWeather';
 
 
 function App() {
   return (
-    <MainWeather />
+    <StrictMode>
+      <MainWeather />
+    </StrictMode>
   );
 }
 

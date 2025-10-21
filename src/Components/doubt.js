@@ -20,6 +20,8 @@ function Doubts({ data }) {
         console.log(tempdata)
     }
     Logs();
+
+    
     return (
         <div>
 

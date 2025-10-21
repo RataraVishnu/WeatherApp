@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../Styles/CurrentWeather.css";
 
 const CurrentWeather = ({ currentWeather, setCity }) => {
@@ -8,6 +8,7 @@ const CurrentWeather = ({ currentWeather, setCity }) => {
         setCity(location)
         setLocation('')
     }
+
     return (
         <div >
             <div className="weather-header">
@@ -93,6 +94,7 @@ const CurrentWeather = ({ currentWeather, setCity }) => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };
