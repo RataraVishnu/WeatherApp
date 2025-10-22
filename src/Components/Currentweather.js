@@ -47,7 +47,7 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc }) => {
                     </div>
                     <div className="current-details-grid">
                         <div className="current-humidity">
-                            <img alt="humidity" src="#" />
+                            <img alt="humidity" src="./humidity.png" />
                             <div className="text-container">
                                 <label>Humidity</label>
                                 <span>{currentWeather?.main?.humidity} %</span>
