@@ -18,9 +18,8 @@ const MainWeather = () => {
     const [city, setCity] = useState("");
     const [suggestionlist, setSuggestionList] = useState([]);
 
-
-    const childProps = {
-
+    function locationDetails(location) {
+        setLocation(location)
     }
 
     useEffect(() => {
@@ -48,22 +47,22 @@ const MainWeather = () => {
     useEffect(() => {
         async function findCoords() {
             if (location) {
-                
-                    try {
-                        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
-                        const response = await fetch(url);
-                        const data = await response.json();
 
-                        if (data.length > 0) {
-                            const lat = parseFloat(data[0].lat);
-                            const lon = parseFloat(data[0].lon);
-                            setCoords({ lat, lon });
-                        } else {
-                            console.warn('City not found.');
-                        }
-                    } catch (error) {
-                        console.error("Error fetching coordinates from city:", error);
+                try {
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.length > 0) {
+                        const lat = parseFloat(data[0].lat);
+                        const lon = parseFloat(data[0].lon);
+                        setCoords({ lat, lon });
+                    } else {
+                        console.warn('City not found.');
                     }
+                } catch (error) {
+                    console.error("Error fetching coordinates from city:", error);
+                }
             } else {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
@@ -230,7 +229,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist}/>
+            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} loc={locationDetails} />
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>

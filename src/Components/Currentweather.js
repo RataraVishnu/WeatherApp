@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../Styles/CurrentWeather.css";
 
-const CurrentWeather = ({ currentWeather, city, setCity, list, setCroods }) => {
+const CurrentWeather = ({ currentWeather, city, setCity, list, loc }) => {
     console.log(city)
 
     const showSuggestions = city.length > 0 && list.length > 0;
@@ -24,7 +24,7 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, setCroods }) => {
                             </p>
                         ))};
                     </div>
-                    <button className="search-button" onClick={setCroods}>Current Location</button>
+                    <button className="search-button" onClick={loc}>Current Location</button>
                 </div>
             </div>
 
