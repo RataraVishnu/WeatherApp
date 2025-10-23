@@ -24,7 +24,7 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc, setList, wra
                             </p>
                         ))};
                     </div>
-                    <button className="search-button" onClick={() => {if(!city.trim()) return; loc(city);}}>Current Location</button>
+                    <button className="search-button" onClick={() => {if(!city.trim()) return; setCity(""); loc(city);}}>Current Location</button>
                 </div>
             </div>
 
