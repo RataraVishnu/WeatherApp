@@ -24,7 +24,7 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc, setList, wra
                             </p>
                         ))};
                     </div>
-                    <button className="search-button" onClick={() => {if(!city.trim()) return; setCity(""); loc(city);}}>Current Location</button>
+                    <button className="search-button" onClick={() => { if (!city.trim()) return; setCity(""); loc(city); }}>Current Location</button>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc, setList, wra
                             <img alt="visibility" src='./visibility.png' />
                             <div className="text-container">
                                 <label>Visibility</label>
-                                <span>{currentWeather?.visibility / 1000} Km</span>
+                                <span>{(currentWeather?.visibility / 1000).toFixed(1)} Km</span>
                             </div>
                         </div>
 
