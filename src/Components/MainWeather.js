@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import '../Styles/MainWeather.css';
 import CurrentWeather from "./Currentweather";
 import DayWeather from "./DayWeather";
@@ -18,9 +18,24 @@ const MainWeather = () => {
     const [city, setCity] = useState("");
     const [suggestionlist, setSuggestionList] = useState([]);
 
-    function locationDetails(location) {
-        setLocation(location)
+    const wrapperRef = useRef(null)
+
+    useEffect(() => {
+        const handleOutClick = (e) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+                setSuggestionList([])
+            }
+        };
+        document.addEventListener('click', handleOutClick);
+        return () => { document.addEventListener('click', handleOutClick); };
+    }, [])
+
+    function locationDetails(city) {
+        setLocation(city);
+        setSuggestionList([]);
     }
+
+    // console.log(suggestionlist)
 
     useEffect(() => {
         async function getSuggestions() {
@@ -49,7 +64,7 @@ const MainWeather = () => {
             if (location) {
 
                 try {
-                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
                     const response = await fetch(url);
                     const data = await response.json();
 
@@ -229,7 +244,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} loc={locationDetails} />
+            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} setList={setSuggestionList} loc={locationDetails} wrapperRef={wrapperRef}/>
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>

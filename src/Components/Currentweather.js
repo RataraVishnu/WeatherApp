@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import "../Styles/CurrentWeather.css";
 
-const CurrentWeather = ({ currentWeather, city, setCity, list, loc }) => {
+const CurrentWeather = ({ currentWeather, city, setCity, list, loc, setList, wrapperRef }) => {
     console.log(city)
 
-    const showSuggestions = city.length > 0 && list.length > 0;
+    const showSuggestions = list.length > 0;
 
     return (
         <div >
-            <div className="weather-header">
+            <div className="weather-header" ref={wrapperRef}>
                 <h1 className="weather-title">Weather Today</h1>
                 <div className="weather-control">
                     <input
@@ -17,14 +17,14 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc }) => {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                     ></input>
-                    <div className="suggestions-list" style={{visibility: showSuggestions? 'visible':'hidden'}}>
+                    <div className="suggestions-list" style={{ visibility: showSuggestions ? 'visible' : 'hidden' }}>
                         {list.map((item, index) => (
-                            <p key={index} className="suggestion-item">
+                            <p key={index} className="suggestion-item" onClick={() => { setCity(item.name); setList([]); }}>
                                 {item.display_name}
                             </p>
                         ))};
                     </div>
-                    <button className="search-button" onClick={loc}>Current Location</button>
+                    <button className="search-button" onClick={() => {if(!city.trim()) return; loc(city);}}>Current Location</button>
                 </div>
             </div>
 
