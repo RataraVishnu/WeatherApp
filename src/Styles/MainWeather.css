@@ -47,32 +47,3 @@ body {
   width: 90vw; 
   gap: 2rem;
 }
-
-@media (max-width: 1024px) {
-  .main-weather-container {
-    padding: 2rem;
-    width: 95vw;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    align-items: flex-start;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
-  
-  .main-weather-container {
-    padding: 1rem; 
-    width: 100%;
-    min-width: unset; 
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 420px) {
-  :root {
-    --radius: 1rem;
-  }
-}

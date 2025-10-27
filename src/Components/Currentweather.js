@@ -16,6 +16,13 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc, setList, wra
                         placeholder="search desired city..."
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                loc(city);
+                                setCity("");
+                                setList([]);
+                            }
+                        }}
                     ></input>
                     <div className="suggestions-list" style={{ visibility: showSuggestions ? 'visible' : 'hidden' }}>
                         {list.map((item, index) => (
@@ -24,7 +31,7 @@ const CurrentWeather = ({ currentWeather, city, setCity, list, loc, setList, wra
                             </p>
                         ))};
                     </div>
-                    <button className="search-button" onClick={() => { if (!city.trim()) return; setCity(""); loc(city); }}>Current Location</button>
+                    <button className="search-button" onClick={() => { if (!city.trim()) return; loc(city); setCity(""); }}>Current Location</button>
                 </div>
             </div>
 

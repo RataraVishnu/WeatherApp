@@ -30,6 +30,7 @@ const MainWeather = () => {
         return () => { document.addEventListener('click', handleOutClick); };
     }, [])
 
+
     function locationDetails(city) {
         setLocation(city);
         setSuggestionList([]);
@@ -244,7 +245,7 @@ const MainWeather = () => {
 
     return (
         <div className="main-weather-container">
-            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} setList={setSuggestionList} loc={locationDetails} wrapperRef={wrapperRef}/>
+            <CurrentWeather currentWeather={currentWeather} city={city} setCity={setCity} list={suggestionlist} setList={setSuggestionList} loc={locationDetails} wrapperRef={wrapperRef} />
             <DayWeather hourWeather={hourWeather} />
             <ForecastWeather forecastWeather={forecastWeather} />
         </div>
